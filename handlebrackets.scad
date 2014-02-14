@@ -2,6 +2,7 @@ bracketOuter = 33;
 bracketScrewOffset = 11; // position of screw axis relative to tool centerline
 
 translate([40,0,0]) rotate([0,0,-90]) difference() {
+// translate([4.3,0,0]) rotate ([0,45,0]) translate([bracketScrewOffset-2,0,0]) rotate([0,0,-90]) difference() { // check hinge fit
   union() {
     color("purple") translate([0,0,5]) cube(size = [bracketOuter,bracketOuter,10], center = true);
   }
@@ -13,18 +14,19 @@ translate([40,0,0]) rotate([0,0,-90]) difference() {
 }
 
 // screw axis is 11mm lower than centerline of soldering tool handle
-hingeOffset = 30; // distange between screw axes on hinge piece
+hingeOffset = 29 - 11 - 5; // distange between screw axes on hinge piece
 // screw axis on 10mm thick base will be 5mm above table surface
 armHeight = hingeOffset + 3.5*3;
 armWidth = bracketOuter + 8;
+armMiddle = 4;
 
 difference() {
   color("purple") hull() {
     translate([-armHeight/2+5,0,5]) rotate([90,0,0]) cylinder(h=armWidth,r=5,$fn=50, center = true);
     translate([armHeight/2-5,0,5]) rotate([90,0,0]) cylinder(h=armWidth,r=5,$fn=50, center = true);
   }
-  color("purple") translate([(armHeight/2-3)/2+3.1,0,5]) cube(size = [armHeight/2-3,bracketOuter,11], center = true);
-  color("purple") translate([-((armHeight/2-3)/2+3.1),0,5]) cube(size = [armHeight/2-3,bracketOuter,11], center = true);
+  color("purple") translate([13,0,5]) cube(size = [30,bracketOuter,11], center = true);
+  // color("orange") translate([-(armHeight/4+armMiddle/2),0,5]) cube(size = [armHeight/2,bracketOuter,11], center = true);
   color("red") translate([-hingeOffset/2,0,5]) rotate([90,0,0]) cylinder(h = armWidth+2, r = 3.5/2, $fn = 100, center = true);
   color("red") translate([+hingeOffset/2,0,5]) rotate([90,0,0]) cylinder(h = armWidth+2, r = 3.5/2, $fn = 100, center = true);
 }
@@ -47,7 +49,7 @@ tailHingeOffset = hingeOffset + bracketScrewOffset - tailScrewOffset; // distang
 tailArmHeight = tailHingeOffset + 3.5*3;
 tailArmWidth = tailOuter + 8;
 
-translate([0,35,0]) difference() {
+translate([0,36,0]) difference() {
   color("purple") hull() {
     translate([-tailArmHeight/2+5,0,5]) rotate([90,0,0]) cylinder(h=tailArmWidth,r=5,$fn=50, center = true);
     translate([tailArmHeight/2-5,0,5]) rotate([90,0,0]) cylinder(h=tailArmWidth,r=5,$fn=50, center = true);
