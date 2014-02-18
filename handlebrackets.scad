@@ -64,7 +64,7 @@ translate([0,36,0]) difference() {
 baseThickness = 3;
 baseAxesOffset = 108 - 13; // hingeOffset = 13 / 0.707; // assuming a 45-degree angle of a 13mm vertical offset
 
-translate([baseAxesOffset/2,0,0]) difference() { // front hinge part of base
+translate([baseAxesOffset/2-armHeight/2+5,0,0]) difference() { // front hinge part of base
   color("purple") hull() {
     translate([-armHeight/2+5,0,5]) rotate([90,0,0]) cylinder(h=armWidth+8,r=5,$fn=50, center = true);
     translate([armHeight/2-5,0,5]) rotate([90,0,0]) cylinder(h=armWidth+8,r=5,$fn=50, center = true);
@@ -73,13 +73,15 @@ translate([baseAxesOffset/2,0,0]) difference() { // front hinge part of base
   // color("red") translate([-hingeOffset/2,0,5]) rotate([90,0,0]) cylinder(h = armWidth+2, r = 3.5/2, $fn = 100, center = true);
   color("red") translate([+hingeOffset/2,0,5]) rotate([90,0,0]) cylinder(h = armWidth+12, r = 3.5/2, $fn = 100, center = true);
 }
-translate([0,0,7]) cube([baseAxesOffset,tailOuter,baseThickness], center = true);
+// translate([0,0,7]) cube([baseAxesOffset,tailOuter,baseThickness], center = true); // checking that screw axes are correct offset
 difference() { // tail hinge and long part of base
   color("purple") union() {
     translate([-baseAxesOffset/2,0,5]) rotate([90,0,0]) cylinder(h=tailOuter,r=5,$fn=50, center = true);
     // translate([armHeight/2-5,0,5]) rotate([90,0,0]) cylinder(h=tailOuter,r=5,$fn=50, center = true);
-    translate([0,0,baseThickness/2]) cube([baseAxesOffset,tailOuter,baseThickness], center = true);
+    translate([-armHeight/2+5,0,baseThickness/2]) cube([baseAxesOffset-armHeight+10,tailOuter,baseThickness], center = true); // flat base
   }
+  translate([20,0,baseThickness/2+1])color("yellow") cube([6,17,baseThickness], center = true); // magnets
+  translate([-38,0,baseThickness/2+1])color("yellow") cube([6,17,baseThickness], center = true); // magnets
 //  color("purple") translate([11,0,5]) cube(size = [30,bracketOuter+1,11], center = true); // +1 to make it fit
   // color("orange") translate([-(armHeight/4+armMiddle/2),0,5]) cube(size = [armHeight/2,bracketOuter,11], center = true);
   color("red") translate([-baseAxesOffset/2,0,5]) rotate([90,0,0]) cylinder(h = tailOuter+2, r = 3.5/2, $fn = 100, center = true);
